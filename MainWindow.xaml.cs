@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using BOSS_Application.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,9 @@ namespace BOSS_Application
         public MainWindow()
         {
             InitializeComponent();
+            MainWindowViewModel mw = new MainWindowViewModel();
+            DataContext = mw;
+
         }
     }
 }
