@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Fill="{Binding Strobe}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+                
+            <TextBlock Grid.Column="0" Text="{Binding Timer.Elapsed}"/>
+            <Button Grid.Column="1" Content="Start" Command="{Binding TimerClick}"/>
+        </Grid>
     </Grid>
 </Window>
