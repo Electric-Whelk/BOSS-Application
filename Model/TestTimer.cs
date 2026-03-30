@@ -14,7 +14,7 @@ namespace BOSS_Application.Model
 {
     class TestTimer : PropertyChangeObject
     {
-        private DispatcherTimer Timer { get; set; }
+        public DispatcherTimer Timer { get; set; }
 
         public TimeSpan Interval {  get; set; }
         public TimeSpan Period { get; set; }
@@ -25,6 +25,9 @@ namespace BOSS_Application.Model
         public TimeSpan countdown;
         public TimeSpan CountDown { get => countdown; set { this.countdown = value; this.OnPropertyChanged(); } }
 
+        private int inseconds;
+        public int InSeconds { get => inseconds; set { this.inseconds = value; this.OnPropertyChanged(); } }
+
 
         public TestTimer(TimeSpan? delay = null, TimeSpan? period = null, TimeSpan? interval = null, TimeSpan? runtime = null)
         {
@@ -34,6 +37,7 @@ namespace BOSS_Application.Model
             this.RunTime = runtime == null ? TimeSpan.FromMinutes(1) : (TimeSpan)runtime;
             this.Elapsed = TimeSpan.FromSeconds(0);
             this.CountDown = this.CountDownUpdate();
+            this.InSeconds = (int)this.CountDown.TotalSeconds;
 
             this.Timer = new DispatcherTimer();
             this.Timer.Interval = TimeSpan.FromSeconds(1);
@@ -45,7 +49,7 @@ namespace BOSS_Application.Model
 
         public TimeSpan TimeMod() { return TimeSpan.FromTicks(this.TrueElapsed().Ticks % this.Period.Ticks); }
 
-         public TimeSpan TrueElapsed() { return this.Elapsed + this.Period - this.Delay; }
+        public TimeSpan TrueElapsed() { return this.Elapsed + this.Period - this.Delay; }
 
         public void Start(){ this.Timer.Start(); }
 
@@ -55,14 +59,15 @@ namespace BOSS_Application.Model
             if (this.Timer.IsEnabled) { this.Stop(); } else { this.Start(); }
         }
 
+        public TimeSpan CountDownUpdate() { return (this.LiveStatus() ? this.Interval : this.Period) - this.TimeMod(); }
+
         public void timer_Tick(object sender, EventArgs e)
         {
             this.Elapsed += TimeSpan.FromSeconds(1);
             this.CountDown = this.CountDownUpdate();
+            this.InSeconds = (int)this.CountDown.TotalSeconds;
 
         }
-
-        public TimeSpan CountDownUpdate() { return (this.LiveStatus() ? this.Interval : this.Period) - this.TimeMod(); }
 
     }
 }

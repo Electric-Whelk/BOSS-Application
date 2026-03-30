@@ -1,1 +1,1 @@
-C# App supporting the implementation of BOSS (Behaviour Observation of Students in Schools) tests. 
+C# App supporting the implementation of BOSS (Behaviour Observation of Students in Schools). 
